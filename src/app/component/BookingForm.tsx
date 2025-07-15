@@ -53,7 +53,7 @@ export default function BookingForm({
   if (submitted) {
     return (
       <p className="mt-4 text-green-600">
-        🎉 Booking submitted! We'll contact you soon.
+        🎉 Booking submitted! We&apos;ll contact you soon.
       </p>
     );
   }
