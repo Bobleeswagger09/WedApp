@@ -1,5 +1,5 @@
 export async function fetchCoordinators() {
-  const res = await fetch("http://localhost:5000/api/coordinators");
+  const res = await fetch("https://wed-server.onrender.com/api/coordinators");
 
   if (!res.ok) {
     throw new Error("Failed to fetch coordinators");
@@ -9,7 +9,9 @@ export async function fetchCoordinators() {
 }
 
 export async function fetchCoordinator(id: string) {
-  const res = await fetch(`http://localhost:5000/api/coordinators/${id}`);
+  const res = await fetch(
+    `https://wed-server.onrender.com/api/coordinators/${id}`
+  );
 
   if (!res.ok) {
     throw new Error("Coordinator not found");
