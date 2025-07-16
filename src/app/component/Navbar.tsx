@@ -32,7 +32,7 @@ export default function Navbar() {
       <div className="max-w-8xl mx-auto flex items-center justify-between px-6">
         {/* Logo and Brand Name */}
         <Link href="/" className="flex items-center text-xl font-semibold">
-          <span className="text-2xl font-bold dark:text-white">WedPro</span>
+          <span className="text-2xl font-bold dark:text-white">Wedly</span>
         </Link>
 
         {/* Desktop Navigation */}
