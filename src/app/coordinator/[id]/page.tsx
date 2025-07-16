@@ -15,7 +15,9 @@ export default function CoordinatorDetail() {
   useEffect(() => {
     async function loadCoordinator() {
       try {
-        const res = await fetch(`http://localhost:5000/api/coordinators/${id}`);
+        const res = await fetch(
+          `https://wed-server.onrender.com/api/coordinators/${id}`
+        );
         const data = await res.json();
         setCoordinator(data);
       } catch (error) {
