@@ -34,5 +34,5 @@
 
 1. **Clone the repo**
    ```bash
-   git clone https://github.com/your-username/wedly-frontend.git
+   git clone https://github.com/Bobleeswagger09/wedly-frontend.git
    cd wedly-frontend
