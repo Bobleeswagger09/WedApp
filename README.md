@@ -6,7 +6,7 @@
 
 ##  Live Demo
 
- [Frontend on Vercel](https://your-vercel-link.vercel.app)
+ [Frontend on Vercel](https://wedly-cordi.vercel.app/)
 
 ---
 
