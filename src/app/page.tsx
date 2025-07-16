@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import CoordinatorCard from "./component/CoordinatorCard";
 import { fetchCoordinators } from "./lib/api";
+import Pagination from "./component/PaginationBox";
 
 export interface Coordinator {
   id: string;
@@ -15,9 +16,29 @@ export interface Coordinator {
 }
 
 export default function Home() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(6);
+
   const [coordinators, setCoordinators] = useState<Coordinator[]>([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
+
+  // Function to update pageSize based on screen width
+  const updatePageSize = () => {
+    if (window.innerWidth < 640) {
+      setPageSize(3);
+    } else if (window.innerWidth < 1024) {
+      setPageSize(4);
+    } else {
+      setPageSize(6);
+    }
+  };
+  // Effect to track window resize
+  useEffect(() => {
+    updatePageSize(); // Set initial size
+    window.addEventListener("resize", updatePageSize);
+    return () => window.removeEventListener("resize", updatePageSize);
+  }, []);
 
   useEffect(() => {
     async function loadCoordinators() {
@@ -34,10 +55,21 @@ export default function Home() {
     loadCoordinators();
   }, []);
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search]);
+
+  // Calculate pagination based on the filtered list
   const filtered = coordinators.filter(
     (c) =>
       c.name.toLowerCase().includes(search.toLowerCase()) ||
       c.location.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const totalPages = Math.ceil(filtered.length / pageSize);
+  const paginatedCoordinators = filtered.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize
   );
 
   return (
@@ -54,11 +86,17 @@ export default function Home() {
         <p className="text-center text-gray-500">Loading coordinators...</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map((c) => (
+          {paginatedCoordinators.map((c) => (
             <CoordinatorCard key={c.id} coordinator={c} />
           ))}
         </div>
       )}
+
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        onPageChange={setCurrentPage}
+      />
     </main>
   );
 }
