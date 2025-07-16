@@ -68,7 +68,7 @@ export default function Footer() {
               Portfolio
             </Link>
             <Link
-              href="https://www.linkedin.com/in/victor-samuel-42a092220/"
+              href="https://www.linkedin.com/in/ediong-seyene-samuel-42a092220/"
               className="link-hover block cursor-pointer"
             >
               LinkedIn

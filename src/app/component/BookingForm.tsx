@@ -1,5 +1,6 @@
 "use client";
 
+import { PartyPopper } from "lucide-react";
 import { useState } from "react";
 
 export default function BookingForm({
@@ -52,8 +53,11 @@ export default function BookingForm({
 
   if (submitted) {
     return (
-      <p className="mt-4 text-green-600">
-        🎉 Booking submitted! We&apos;ll contact you soon.
+      <p className="mt-4  flex gap-2">
+        <PartyPopper className="text-green-600" />
+        <span className="text-yellow-400">
+          Booking submitted! We&apos;ll contact you soon.
+        </span>
       </p>
     );
   }

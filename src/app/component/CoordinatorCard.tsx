@@ -17,7 +17,7 @@ export default function CoordinatorCard({ coordinator }: { coordinator: any }) {
       <p className="text-gray-600 dark:text-gray-300">{coordinator.location}</p>
       <p className="text-green-600 font-bold">{coordinator.price}</p>
       <Link href={`/coordinator/${coordinator.id}`}>
-        <button className="mt-3 bg-blue-600 text-white px-4 py-2 rounded">
+        <button className="mt-3 bg-blue-600 text-white px-4 py-2 rounded text-base font-normal cursor-pointer hover:bg-transparent border-neutral border transition-all duration-300">
           View Profile
         </button>
       </Link>
