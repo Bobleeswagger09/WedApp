@@ -43,8 +43,9 @@ export default function Home() {
   //  Fetch coordinators
   useEffect(() => {
     async function loadCoordinators() {
+      setLoading(true);
       try {
-        const response = await fetchCoordinators();
+        const response = await fetchCoordinators(currentPage, pageSize);
         setCoordinators(response.data);
       } catch (error) {
         console.error("Error fetching coordinators:", error);
@@ -54,7 +55,7 @@ export default function Home() {
     }
 
     loadCoordinators();
-  }, []);
+  }, [currentPage, pageSize]);
 
   //  Update page on search reset
   useEffect(() => {
