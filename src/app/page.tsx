@@ -20,18 +20,18 @@ export interface Coordinator {
 export default function Home() {
   const router = useRouter();
   const searchParams = useSearchParams();
+
   const [coordinators, setCoordinators] = useState<Coordinator[]>([]);
   const [search, setSearch] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(6);
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(6);
 
-  //  Responsive page size
+  // Update page size on screen width
   const updatePageSize = () => {
     const width = window.innerWidth;
-    if (width < 640) setPageSize(3);
-    else if (width < 1024) setPageSize(4);
-    else setPageSize(6);
+    const size = width < 640 ? 3 : width < 1024 ? 4 : 6;
+    setPageSize(size);
   };
 
   useEffect(() => {
@@ -40,46 +40,62 @@ export default function Home() {
     return () => window.removeEventListener("resize", updatePageSize);
   }, []);
 
-  //  Fetch coordinators
+  // Sync currentPage from URL param
   useEffect(() => {
-    async function loadCoordinators() {
+    const pageParam = parseInt(searchParams.get("page") || "1", 10);
+    if (!isNaN(pageParam) && pageParam > 0) {
+      setCurrentPage(pageParam);
+    }
+  }, [searchParams]);
+
+  // Push page to URL when currentPage changes
+  useEffect(() => {
+    const pageInUrl = parseInt(searchParams.get("page") || "1", 10);
+    if (pageInUrl !== currentPage) {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("page", currentPage.toString());
+      router.push(`/?${params.toString()}`);
+    }
+  }, [currentPage]);
+
+  // Reset page to 1 on new search and update URL
+  useEffect(() => {
+    setCurrentPage(1);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", "1");
+    router.push(`/?${params.toString()}`);
+  }, [search]);
+
+  // Fetch data when currentPage or pageSize changes
+  useEffect(() => {
+    const loadCoordinators = async () => {
       setLoading(true);
       try {
         const response = await fetchCoordinators(currentPage, pageSize);
-        setCoordinators(response.data);
+        const data = Array.isArray(response.data) ? response.data : [];
+        setCoordinators(data);
       } catch (error) {
         console.error("Error fetching coordinators:", error);
+        setCoordinators([]);
       } finally {
         setLoading(false);
       }
-    }
+    };
 
     loadCoordinators();
   }, [currentPage, pageSize]);
 
-  //  Update page on search reset
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [search]);
-
-  //  Push page query only when needed
-  useEffect(() => {
-    const current = searchParams.get("page");
-    if (parseInt(current || "1") !== currentPage) {
-      router.push(`/?page=${currentPage}`);
-    }
-  }, [currentPage]);
-
-  //  Memoized filtered list
   const filtered = useMemo(() => {
-    return coordinators?.filter((c) =>
-      [c.name, c.location].some((field) =>
+    if (!search.trim()) return coordinators ?? [];
+    return (coordinators ?? []).filter(({ name, location }) =>
+      [name, location].some((field) =>
         field.toLowerCase().includes(search.toLowerCase())
       )
     );
   }, [coordinators, search]);
 
   const totalPages = Math.ceil(filtered.length / pageSize);
+
   const paginatedCoordinators = useMemo(() => {
     const start = (currentPage - 1) * pageSize;
     return filtered.slice(start, start + pageSize);
@@ -88,19 +104,21 @@ export default function Home() {
   return (
     <main className="p-6 bg-foreground min-h-screen dark:bg-gray-900 dark:text-white">
       <SearchInput value={search} onChange={setSearch} />
-
       {loading ? (
         <p className="text-center text-gray-500">Loading coordinators...</p>
       ) : filtered.length === 0 ? (
         <p className="text-center text-gray-400">No coordinators found.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {paginatedCoordinators.map((c) => (
-            <CoordinatorCard key={c.id} coordinator={c} page={currentPage} />
+          {paginatedCoordinators.map((coordinator) => (
+            <CoordinatorCard
+              key={coordinator.id}
+              coordinator={coordinator}
+              page={currentPage}
+            />
           ))}
         </div>
       )}
-
       {totalPages > 1 && (
         <Pagination
           totalPages={totalPages}
