@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter, useParams } from "next/navigation";
+import { useRouter, useParams, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import BookingForm from "@/app/component/BookingForm";
 import { ArrowLeft } from "lucide-react";
@@ -11,7 +11,17 @@ export default function CoordinatorDetail() {
   const { id } = useParams();
   const [coordinator, setCoordinator] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const searchParams = useSearchParams();
 
+  const page = searchParams.get("page");
+
+  const goBack = () => {
+    if (page) {
+      router.push(`/?page=${page}`);
+    } else {
+      router.back();
+    }
+  };
   useEffect(() => {
     async function loadCoordinator() {
       try {
@@ -36,10 +46,7 @@ export default function CoordinatorDetail() {
 
   return (
     <div className="min-h-screen p-6 bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-white">
-      <button
-        onClick={() => router.back()}
-        className="text-blue-500 mb-4 flex gap-2"
-      >
+      <button onClick={goBack} className="text-blue-500 mb-4 flex gap-2">
         <ArrowLeft /> <span>Back</span>
       </button>
 

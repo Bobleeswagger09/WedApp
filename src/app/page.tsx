@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import CoordinatorCard from "./component/CoordinatorCard";
 import { fetchCoordinators } from "./lib/api";
 import Pagination from "./component/PaginationBox";
@@ -16,37 +17,36 @@ export interface Coordinator {
 }
 
 export default function Home() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(6);
-
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [coordinators, setCoordinators] = useState<Coordinator[]>([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(6);
 
-  // Function to update pageSize based on screen width
+  // 📦 Responsive page size
   const updatePageSize = () => {
-    if (window.innerWidth < 640) {
-      setPageSize(3);
-    } else if (window.innerWidth < 1024) {
-      setPageSize(4);
-    } else {
-      setPageSize(6);
-    }
+    const width = window.innerWidth;
+    if (width < 640) setPageSize(3);
+    else if (width < 1024) setPageSize(4);
+    else setPageSize(6);
   };
-  // Effect to track window resize
+
   useEffect(() => {
-    updatePageSize(); // Set initial size
+    updatePageSize();
     window.addEventListener("resize", updatePageSize);
     return () => window.removeEventListener("resize", updatePageSize);
   }, []);
 
+  // Fetch coordinators
   useEffect(() => {
     async function loadCoordinators() {
       try {
         const data = await fetchCoordinators();
         setCoordinators(data);
-      } catch (err) {
-        console.error("Error fetching coordinators:", err);
+      } catch (error) {
+        console.error("Error fetching coordinators:", error);
       } finally {
         setLoading(false);
       }
@@ -55,25 +55,36 @@ export default function Home() {
     loadCoordinators();
   }, []);
 
+  //  Update page on search reset
   useEffect(() => {
     setCurrentPage(1);
   }, [search]);
 
-  // Calculate pagination based on the filtered list
-  const filtered = coordinators.filter(
-    (c) =>
-      c.name.toLowerCase().includes(search.toLowerCase()) ||
-      c.location.toLowerCase().includes(search.toLowerCase())
-  );
+  // Push page query only when needed
+  useEffect(() => {
+    const current = searchParams.get("page");
+    if (parseInt(current || "1") !== currentPage) {
+      router.push(`/?page=${currentPage}`);
+    }
+  }, [currentPage]);
+
+  // 🧠 Memoized filtered list
+  const filtered = useMemo(() => {
+    return coordinators?.filter((c) =>
+      [c.name, c.location].some((field) =>
+        field.toLowerCase().includes(search.toLowerCase())
+      )
+    );
+  }, [coordinators, search]);
 
   const totalPages = Math.ceil(filtered.length / pageSize);
-  const paginatedCoordinators = filtered.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize
-  );
+  const paginatedCoordinators = useMemo(() => {
+    const start = (currentPage - 1) * pageSize;
+    return filtered.slice(start, start + pageSize);
+  }, [filtered, currentPage, pageSize]);
 
   return (
-    <main className="p-6  bg-foreground min-h-screen dark:bg-gray-900 dark:text-white">
+    <main className="p-6 bg-foreground min-h-screen dark:bg-gray-900 dark:text-white">
       <input
         type="text"
         placeholder="Search by name or location"
@@ -84,19 +95,23 @@ export default function Home() {
 
       {loading ? (
         <p className="text-center text-gray-500">Loading coordinators...</p>
+      ) : filtered.length === 0 ? (
+        <p className="text-center text-gray-400">No coordinators found.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {paginatedCoordinators.map((c) => (
-            <CoordinatorCard key={c.id} coordinator={c} />
+            <CoordinatorCard key={c.id} coordinator={c} page={currentPage} />
           ))}
         </div>
       )}
 
-      <Pagination
-        totalPages={totalPages}
-        currentPage={currentPage}
-        onPageChange={setCurrentPage}
-      />
+      {totalPages > 1 && (
+        <Pagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
+      )}
     </main>
   );
 }

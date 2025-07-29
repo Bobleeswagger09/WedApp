@@ -1,11 +1,13 @@
-export async function fetchCoordinators() {
-  const res = await fetch("https://wed-server.onrender.com/api/coordinators");
+export async function fetchCoordinators(page = 1, limit = 10) {
+  const res = await fetch(
+    `https://wed-server.onrender.com/api/coordinators?page=${page}&limit=${limit}`
+  );
 
   if (!res.ok) {
     throw new Error("Failed to fetch coordinators");
   }
 
-  return res.json();
+  return res.json(); // returns { page, limit, totalItems, totalPages, data }
 }
 
 export async function fetchCoordinator(id: string) {
