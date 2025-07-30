@@ -26,7 +26,7 @@ export default function CoordinatorDetail() {
     async function loadCoordinator() {
       try {
         const res = await fetch(
-          `https://wed-server.onrender.com/api/coordinators/${id}`
+          `https://wed-server-1.onrender.com/api/coordinators/${id}`
         );
         const data = await res.json();
         setCoordinator(data);
