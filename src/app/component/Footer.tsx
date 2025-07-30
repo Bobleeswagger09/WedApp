@@ -52,9 +52,7 @@ export default function Footer() {
 
           <div className="space-y-4">
             <span className="footer-title">Follow us</span>
-            <Link href="/" className="link-hover block cursor-pointer">
-              Facebook
-            </Link>
+
             <Link
               href="https://x.com/SecureBootSammy"
               className="link-hover block cursor-pointer"
