@@ -26,6 +26,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(6);
+  const [totalCount, setTotalCount] = useState<number>(0);
 
   // Update page size on screen width
   const updatePageSize = () => {
@@ -58,14 +59,6 @@ export default function Home() {
     }
   }, [currentPage]);
 
-  // Reset page to 1 on new search and update URL
-  useEffect(() => {
-    setCurrentPage(1);
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("page", "1");
-    router.push(`/?${params.toString()}`);
-  }, [search]);
-
   // Fetch data when currentPage or pageSize changes
   useEffect(() => {
     const loadCoordinators = async () => {
@@ -74,6 +67,7 @@ export default function Home() {
         const response = await fetchCoordinators(currentPage, pageSize);
         const data = Array.isArray(response.data) ? response.data : [];
         setCoordinators(data);
+        setTotalCount(response.totalItems);
       } catch (error) {
         console.error("Error fetching coordinators:", error);
         setCoordinators([]);
@@ -87,19 +81,14 @@ export default function Home() {
 
   const filtered = useMemo(() => {
     if (!search.trim()) return coordinators ?? [];
-    return (coordinators ?? []).filter(({ name, location }) =>
+    return (coordinators ?? []).filter(({ name = "", location = "" }) =>
       [name, location].some((field) =>
         field.toLowerCase().includes(search.toLowerCase())
       )
     );
-  }, [coordinators, search]);
+  }, [search, coordinators]);
 
-  const totalPages = Math.ceil(filtered.length / pageSize);
-
-  const paginatedCoordinators = useMemo(() => {
-    const start = (currentPage - 1) * pageSize;
-    return filtered.slice(start, start + pageSize);
-  }, [filtered, currentPage, pageSize]);
+  const totalPages = Math.ceil(totalCount / pageSize);
 
   return (
     <main className="p-6 bg-foreground min-h-screen dark:bg-gray-900 dark:text-white">
@@ -110,7 +99,7 @@ export default function Home() {
         <p className="text-center text-gray-400">No coordinators found.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {paginatedCoordinators.map((coordinator) => (
+          {filtered.map((coordinator) => (
             <CoordinatorCard
               key={coordinator.id}
               coordinator={coordinator}

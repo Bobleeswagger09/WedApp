@@ -1,4 +1,4 @@
-export async function fetchCoordinators(page = 1, limit = 10) {
+export async function fetchCoordinators(page: number = 1, limit: number = 10) {
   const res = await fetch(
     `https://wed-server.onrender.com/api/coordinators?page=${page}&limit=${limit}`
   );
