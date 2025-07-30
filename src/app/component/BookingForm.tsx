@@ -88,6 +88,7 @@ export default function BookingForm({
       <input
         type="date"
         name="date"
+        placeholder="Select your wedding date"
         className="w-full p-2 border rounded dark:bg-neutral"
         value={form.date}
         required
