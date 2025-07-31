@@ -50,6 +50,7 @@ export default function BookingForm({
       <input
         type="date"
         name="date"
+        placeholder="Wedding date"
         required
         className="block w-full p-2 border"
       />
