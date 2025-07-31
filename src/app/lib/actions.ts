@@ -5,11 +5,12 @@ export async function bookCoordinator(prevState: any, formData: FormData) {
   const email = formData.get("email") as string;
   const date = formData.get("date") as string;
   const coordinatorId = formData.get("coordinatorId") as string;
+  const guests = Number(formData.get("guests"));
 
   try {
     const res = await fetch(`https://wed-server-1.onrender.com/api/bookings`, {
       method: "POST",
-      body: JSON.stringify({ name, email, date, coordinatorId }),
+      body: JSON.stringify({ name, email, date, guests, coordinatorId }),
       headers: { "Content-Type": "application/json" },
     });
 
