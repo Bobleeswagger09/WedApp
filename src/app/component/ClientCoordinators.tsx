@@ -1,4 +1,3 @@
-// components/ClientCoordinators.tsx
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
@@ -7,7 +6,6 @@ import SearchInput from "./SearchInput";
 import CoordinatorCard from "./CoordinatorCard";
 import Pagination from "./PaginationBox";
 import { Coordinator } from "@/types/Coordinator";
-import { fetchCoordinators } from "../lib/api";
 
 export default function ClientCoordinators({
   coordinators: initialCoordinators,
@@ -23,20 +21,18 @@ export default function ClientCoordinators({
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [coordinators, setCoordinators] = useState(initialCoordinators);
   const [search, setSearch] = useState("");
-  const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(initialPage);
   const [pageSize, setPageSize] = useState(initialLimit);
-  const [totalCount, setTotalCount] = useState(initialTotal);
-
-  const updatePageSize = () => {
-    const width = window.innerWidth;
-    const size = width < 640 ? 3 : width < 1024 ? 4 : 6;
-    setPageSize(size);
-  };
 
   useEffect(() => {
+    const calculatePageSize = () => {
+      const width = window.innerWidth;
+      return width < 640 ? 3 : width < 1024 ? 4 : 6;
+    };
+
+    const updatePageSize = () => setPageSize(calculatePageSize());
+
     updatePageSize();
     window.addEventListener("resize", updatePageSize);
     return () => window.removeEventListener("resize", updatePageSize);
@@ -44,7 +40,7 @@ export default function ClientCoordinators({
 
   useEffect(() => {
     const pageParam = parseInt(searchParams.get("page") || "1", 10);
-    if (!isNaN(pageParam) && pageParam > 0) {
+    if (pageParam > 0 && pageParam !== currentPage) {
       setCurrentPage(pageParam);
     }
   }, [searchParams]);
@@ -58,46 +54,24 @@ export default function ClientCoordinators({
     }
   }, [currentPage]);
 
-  useEffect(() => {
-    const loadCoordinators = async () => {
-      setLoading(true);
-      try {
-        const response = await fetchCoordinators(currentPage, pageSize);
-        const data = Array.isArray(response.data) ? response.data : [];
-        setCoordinators(data);
-        setTotalCount(response.totalItems);
-      } catch (error) {
-        console.error("Error fetching coordinators:", error);
-        setCoordinators([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadCoordinators();
-  }, [currentPage, pageSize]);
-
-  const filtered = useMemo(() => {
-    if (!search.trim()) return coordinators ?? [];
-    return (coordinators ?? []).filter(({ name = "", location = "" }) =>
-      [name, location].some((field) =>
-        field.toLowerCase().includes(search.toLowerCase())
-      )
+  const filteredCoordinators = useMemo(() => {
+    if (!search.trim()) return initialCoordinators;
+    const lowered = search.toLowerCase();
+    return initialCoordinators.filter(({ name = "", location = "" }) =>
+      [name, location].some((field) => field.toLowerCase().includes(lowered))
     );
-  }, [search, coordinators]);
+  }, [search, initialCoordinators]);
 
-  const totalPages = Math.ceil(totalCount / pageSize);
+  const totalPages = Math.ceil(initialTotal / pageSize);
 
   return (
     <main className="p-6 bg-foreground min-h-screen dark:bg-gray-900 dark:text-white">
       <SearchInput value={search} onChange={setSearch} />
-      {loading ? (
-        <p className="text-center text-gray-500">Loading coordinators...</p>
-      ) : filtered.length === 0 ? (
+      {filteredCoordinators.length === 0 ? (
         <p className="text-center text-gray-400">No coordinators found.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map((coordinator) => (
+          {filteredCoordinators.map((coordinator) => (
             <CoordinatorCard
               key={coordinator.id}
               coordinator={coordinator}
