@@ -1,54 +1,30 @@
-"use client";
-
-import { useRouter, useParams, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import BookingForm from "@/app/component/BookingForm";
-import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
+import BookingForm from "@/app/component/BookingForm";
+import { notFound } from "next/navigation";
 
-export default function CoordinatorDetail() {
-  const router = useRouter();
-  const { id } = useParams();
-  const [coordinator, setCoordinator] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  const searchParams = useSearchParams();
+export default async function CoordinatorDetail({ params, searchParams }: any) {
+  const { id } = params;
+  const page = searchParams?.page;
 
-  const page = searchParams.get("page");
+  const res = await fetch(
+    `https://wed-server-1.onrender.com/api/coordinators/${id}`,
+    { cache: "no-store" }
+  );
 
-  const goBack = () => {
-    if (page) {
-      router.push(`/?page=${page}`);
-    } else {
-      router.back();
-    }
-  };
-  useEffect(() => {
-    async function loadCoordinator() {
-      try {
-        const res = await fetch(
-          `https://wed-server-1.onrender.com/api/coordinators/${id}`
-        );
-        const data = await res.json();
-        setCoordinator(data);
-      } catch (error) {
-        setCoordinator(null);
-      } finally {
-        setLoading(false);
-      }
-    }
+  if (!res.ok) return notFound();
 
-    if (id) loadCoordinator();
-  }, [id]);
-
-  if (loading) return <p className="p-6 text-center">Loading...</p>;
-  if (!coordinator)
-    return <p className="p-6 text-center">Coordinator not found</p>;
+  const coordinator = await res.json();
 
   return (
     <div className="min-h-screen p-6 bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-white">
-      <button onClick={goBack} className="text-blue-500 mb-4 flex gap-2">
+      <Link
+        href={page ? `/?page=${page}` : "/"}
+        className="text-blue-500 mb-4 flex gap-2"
+      >
         <ArrowLeft /> <span>Back</span>
-      </button>
+      </Link>
 
       <Image
         src={coordinator.photo}
