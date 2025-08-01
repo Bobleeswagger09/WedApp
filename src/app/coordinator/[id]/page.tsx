@@ -10,7 +10,9 @@ export default async function CoordinatorDetail({ params, searchParams }: any) {
 
   const res = await fetch(
     `https://wed-server-1.onrender.com/api/coordinators/${id}`,
-    { cache: "no-store" }
+    {
+      next: { revalidate: 60 },
+    }
   );
 
   if (!res.ok) return notFound();
