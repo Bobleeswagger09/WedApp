@@ -1,3 +1,5 @@
+"use server";
+
 export async function fetchCoordinators(page: number = 1, limit: number = 10) {
   const res = await fetch(
     `https://wed-server-1.onrender.com/api/coordinators?page=${page}&limit=${limit}`

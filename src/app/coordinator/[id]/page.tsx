@@ -3,18 +3,13 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import BookingForm from "@/app/component/BookingForm";
 import { notFound } from "next/navigation";
+import { fetchCoordinator } from "@/app/lib/api";
 
 export default async function CoordinatorDetail({ params, searchParams }: any) {
   const { id } = params;
   const page = searchParams?.page;
 
-  const res = await fetch(
-    `https://wed-server-1.onrender.com/api/coordinators/${id}`
-  );
-
-  if (!res.ok) return notFound();
-
-  const coordinator = await res.json();
+  const coordinator = await fetchCoordinator(id);
 
   return (
     <div className="min-h-screen p-6 bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-white">
