@@ -7,6 +7,7 @@ export default function HeroLanding() {
   return (
     <section className="relative bg-white text-center overflow-hidden min-h-[76vh] lg:min-h-[80vh] xl:min-h-[95vh] flex items-center justify-center">
       {/* Background Video */}
+
       <video
         className="absolute inset-0 w-full h-full object-cover"
         src="/wedly.mp4"
@@ -14,6 +15,8 @@ export default function HeroLanding() {
         muted
         loop
         playsInline
+        preload="auto"
+        poster="/fallback.jpg"
         aria-hidden="true"
       />
 
