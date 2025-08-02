@@ -1,22 +1,17 @@
-import ClientCoordinators from "./component/ClientCoordinators";
-import { fetchCoordinators } from "./lib/api";
+import CallToAction from "./component/CallToAction";
+import CoordinatorsGrid from "./component/CoordinatorsGrid";
+import Hero from "./component/Hero";
+import Testimonials from "./component/Testimonials";
+import WhyChooseUs from "./component/WhyChooseUs";
 
-export default async function Home({
-  searchParams,
-}: {
-  searchParams: { page?: string };
-}) {
-  const page = parseInt(searchParams.page || "1", 10);
-  const limit = 6;
-
-  const response = await fetchCoordinators(page, limit);
-
+export default function Home() {
   return (
-    <ClientCoordinators
-      coordinators={response.data}
-      totalCount={response.totalItems}
-      initialPage={page}
-      initialLimit={limit}
-    />
+    <main className="min-h-screen bg-white text-gray-800">
+      <Hero />
+      <WhyChooseUs />
+      <CoordinatorsGrid />
+      <Testimonials />
+      <CallToAction />
+    </main>
   );
 }

@@ -24,7 +24,7 @@ const Pagination = ({
           onClick={() => handlePageChange(i)}
           className={`px-3 py-1 mx-1 rounded ${
             i === currentPage
-              ? "bg-blue-600 text-white"
+              ? "bg-[#8934cf] text-white"
               : "bg-gray-200 dark:text-black hover:bg-gray-300"
           }`}
         >

@@ -5,6 +5,7 @@ import Providers from "./themeProvider/providers";
 import Navbar from "./component/Navbar";
 import Footer from "./component/Footer";
 import { Suspense } from "react";
+import Loading from "./loading";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<Loading />}>
           <Providers>
             <Navbar />
             <main className="bg-white text-black dark:bg-gray-900 dark:text-white min-h-screen">

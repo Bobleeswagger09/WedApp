@@ -1,12 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["localhost", "wed-server.onrender.com"],
+    domains: ["localhost", "wed-server.onrender.com", "ui-avatars.com"],
     remotePatterns: [
       {
         protocol: "https",
         hostname: "wed-server.onrender.com",
-        pathname: "/images/**", // or "/**" if you want to allow all paths
+        pathname: "/images/**",
       },
     ],
   },

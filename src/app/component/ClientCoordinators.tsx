@@ -50,7 +50,7 @@ export default function ClientCoordinators({
     if (pageInUrl !== currentPage) {
       const params = new URLSearchParams(searchParams.toString());
       params.set("page", currentPage.toString());
-      router.push(`/?${params.toString()}`);
+      router.push(`/coordinator?${params.toString()}`);
     }
   }, [currentPage]);
 
@@ -65,7 +65,7 @@ export default function ClientCoordinators({
   const totalPages = Math.ceil(initialTotal / pageSize);
 
   return (
-    <main className="p-6 bg-foreground min-h-screen dark:bg-gray-900 dark:text-white">
+    <main className="p-6 bg-foreground min-h-screen dark:bg-gray-900 dark:text-white mt-20">
       <SearchInput value={search} onChange={setSearch} />
       {filteredCoordinators.length === 0 ? (
         <p className="text-center text-gray-400">No coordinators found.</p>

@@ -2,7 +2,6 @@ import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import BookingForm from "@/app/component/BookingForm";
-import { notFound } from "next/navigation";
 import { fetchCoordinator } from "@/app/lib/api";
 
 export default async function CoordinatorDetail({ params, searchParams }: any) {
@@ -12,9 +11,9 @@ export default async function CoordinatorDetail({ params, searchParams }: any) {
   const coordinator = await fetchCoordinator(id);
 
   return (
-    <div className="min-h-screen p-6 bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-white">
+    <div className="min-h-screen p-6 bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-white mt-20">
       <Link
-        href={page ? `/?page=${page}` : "/"}
+        href={page ? `/coordinator?page=${page}` : "/"}
         className="text-blue-500 mb-4 flex gap-2"
       >
         <ArrowLeft /> <span>Back</span>
