@@ -16,7 +16,7 @@ export default function WhyChooseUs() {
           <span className="text-gray-800 dark:text-white">WEDLY</span>
         </h2>
         <p className="text-gray-600 dark:text-gray-300 text-lg mb-10">
-          We're making wedding planning simpler, faster, and stress-free.
+          We&apos;re making wedding planning simpler, faster, and stress-free.
         </p>
 
         <ul className="grid gap-6 sm:grid-cols-2 md:text-center">

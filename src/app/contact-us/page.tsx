@@ -7,11 +7,12 @@ export default function ContactPage() {
         {/* Left: Info Section */}
         <div>
           <h1 className="text-4xl md:text-5xl font-bold text-rose-600 dark:text-rose-500 mb-4 leading-tight">
-            Let's Bring Your Dream Wedding to Life
+            Let&apos;s Bring Your Dream Wedding to Life
           </h1>
           <p className="mb-6 text-lg text-gray-700 dark:text-gray-300">
-            Have a question, idea, or just want to say hello? We’d love to hear
-            from you. Reach out and let’s make something magical together.
+            Have a question, idea, or just want to say hello? We&apos;d love to
+            hear from you. Reach out and let&apos;s make something magical
+            together.
           </p>
 
           <ul className="space-y-3 mt-6 text-base text-gray-700 dark:text-gray-300">
