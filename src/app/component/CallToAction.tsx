@@ -27,16 +27,19 @@ export default function CallToAction() {
         <div className="flex flex-wrap justify-center gap-4">
           {/* Primary CTA Button */}
           <Link
-            href={`/coordinators`}
+            href={`/coordinator`}
             className="px-8 py-3 rounded-full font-semibold text-white bg-gradient-to-r from-pink-500 via-rose-500 to-red-500 hover:from-rose-600 hover:to-pink-600 transition-all shadow-md hover:shadow-lg"
           >
             Browse Coordinators
           </Link>
 
           {/* Secondary CTA Button */}
-          <button className="px-8 py-3 rounded-full font-semibold text-rose-600 bg-white border-2 border-white hover:bg-rose-50 hover:text-rose-700 transition-all shadow-md hover:shadow-lg">
+          <Link
+            href={`/join`}
+            className="px-8 py-3 rounded-full font-semibold text-rose-600 bg-white border-2 border-white hover:bg-rose-50 hover:text-rose-700 transition-all shadow-md hover:shadow-lg"
+          >
             Become a Coordinator
-          </button>
+          </Link>
         </div>
       </motion.div>
     </section>
