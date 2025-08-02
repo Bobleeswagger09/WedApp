@@ -16,11 +16,11 @@ export default function CallToAction() {
         className="relative z-10 max-w-3xl mx-auto"
       >
         <h2 className="text-4xl sm:text-5xl font-bold mb-6 leading-tight">
-          Let’s Make Your Dream Wedding a Reality
+          Let&apos;s Make Your Dream Wedding a Reality
         </h2>
         <p className="text-lg sm:text-xl mb-10 text-rose-50">
-          Discover Nigeria’s finest wedding coordinators and start your journey
-          today.
+          Discover Nigeria&apos;s finest wedding coordinators and start your
+          journey today.
         </p>
 
         <div className="flex flex-wrap justify-center gap-4">
