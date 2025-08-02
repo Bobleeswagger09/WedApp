@@ -35,7 +35,7 @@ export default function Navbar() {
       <div className="xl:max-w-[1600px] lg:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link href="/" className="text-2xl font-bold text-rose-600">
+          <Link href="/" className="text-2xl font-bold text-rose-600 ">
             Wedly
           </Link>
 
@@ -46,7 +46,7 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "hover:text-rose-600 transition font-medium",
+                  "transition-colors transition-border duration-300 ease-in-out font-medium hover:border-b hover:border-b-rose-600",
                   pathname === link.href
                     ? "text-rose-600"
                     : "text-gray-700 dark:text-gray-200"
