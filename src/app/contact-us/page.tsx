@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function ContactPage() {
   return (
-    <section className="min-h-screen bg-gradient-to-tr from-rose-50 via-white to-rose-100 dark:from-gray-900 dark:via-gray-950 dark:to-gray-900 px-6 py-40 text-gray-800 dark:text-gray-100">
+    <section className="min-h-screen bg-gradient-to-tr from-rose-100 via-white to-rose-200 dark:from-gray-900 dark:via-gray-950 dark:to-gray-900 px-6 py-40 text-gray-800 dark:text-gray-100">
       <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-16 items-center">
         {/* Left: Info Section */}
         <div>

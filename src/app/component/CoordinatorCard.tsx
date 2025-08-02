@@ -28,7 +28,7 @@ export default function CoordinatorCard({
           query: { page },
         }}
       >
-        <button className="mt-3 bg-[#8934cf]  text-white px-4 py-2 rounded text-base font-normal cursor-pointer dark:hover:bg-transparent dark:border-neutral border transition-all duration-300">
+        <button className="mt-3 bg-[#8934cf] hover:bg-[#511f7a]  text-white px-4 py-2 rounded text-base font-normal cursor-pointer dark:hover:bg-transparent dark:border-neutral border transition-all duration-300">
           View Profile
         </button>
       </Link>

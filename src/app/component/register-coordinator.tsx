@@ -33,7 +33,7 @@ export default function BecomeCoordinator() {
   };
 
   return (
-    <section className="h-[100vh] py-40  px-6 bg-white dark:bg-gray-950 text-gray-900 dark:text-white">
+    <section className="h-full min-h-[100vh] py-40  px-6 bg-red-100 dark:bg-gray-950 text-gray-900 dark:text-white">
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -42,7 +42,7 @@ export default function BecomeCoordinator() {
         className="max-w-4xl mx-auto text-center"
       >
         <div className="flex items-center justify-center gap-3 mb-4 text-rose-600 dark:text-rose-400">
-          <UserPlus className="w-6 h-6" />
+          <UserPlus className="w-6 h-6 hidden sm:block" />
           <h2 className="text-3xl sm:text-4xl font-bold">
             Become a Coordinator
           </h2>
