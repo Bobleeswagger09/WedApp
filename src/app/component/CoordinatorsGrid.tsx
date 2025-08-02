@@ -3,9 +3,11 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 const coordinators = [
   {
+    id: "wedplanner",
     name: "Amara Events",
     location: "Lagos",
     price: "₦150,000+",
@@ -13,6 +15,7 @@ const coordinators = [
     tag: "Top Rated",
   },
   {
+    id: "joy",
     name: "Joy Weddings",
     location: "Abuja",
     price: "₦120,000+",
@@ -20,6 +23,7 @@ const coordinators = [
     tag: "Trusted",
   },
   {
+    id: "eve",
     name: "Eve & Co",
     location: "Port Harcourt",
     price: "₦180,000+",
@@ -69,7 +73,7 @@ export default function CoordinatorsGrid() {
                   {c.name}
                 </h3>
                 <span
-                  className={`text-xs px-2 py-1 rounded-full ${
+                  className={`text-xs px-2 py-1 rounded-full whitespace-nowrap ${
                     tagColorMap[c.tag] || "bg-gray-100 text-gray-700"
                   }`}
                 >
@@ -82,9 +86,11 @@ export default function CoordinatorsGrid() {
               <p className="text-base font-medium text-rose-600 dark:text-rose-400 mt-1">
                 {c.price}
               </p>
-              <button className="mt-4 flex items-center gap-2 text-sm text-white bg-rose-600 px-4 py-2 rounded-full hover:bg-rose-700 transition">
-                View Profile <ArrowRight className="w-4 h-4" />
-              </button>
+              <Link href={`/coordinators/${c.id}`}>
+                <button className="mt-4 flex items-center gap-2 text-sm text-white bg-rose-600 px-4 py-2 rounded-full hover:bg-rose-700 transition">
+                  View Profile <ArrowRight className="w-4 h-4" />
+                </button>
+              </Link>
             </div>
           </motion.div>
         ))}

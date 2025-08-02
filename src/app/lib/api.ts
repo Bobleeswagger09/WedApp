@@ -2,7 +2,7 @@
 
 export async function fetchCoordinators(page: number = 1, limit: number = 10) {
   const res = await fetch(
-    `https://wed-server-1.onrender.com/api/coordinators?page=${page}&limit=${limit}`
+    `https://wed-server.onrender.com/api/coordinators?page=${page}&limit=${limit}`
   );
 
   if (!res.ok) {
@@ -14,7 +14,7 @@ export async function fetchCoordinators(page: number = 1, limit: number = 10) {
 
 export async function fetchCoordinator(id: string) {
   const res = await fetch(
-    `https://wed-server-1.onrender.com/api/coordinators/${id}`
+    `https://wed-server.onrender.com/api/coordinators/${id}`
   );
 
   if (!res.ok) {
