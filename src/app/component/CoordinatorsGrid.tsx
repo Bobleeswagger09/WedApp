@@ -7,7 +7,7 @@ import Link from "next/link";
 
 const coordinators = [
   {
-    id: "wedplanner",
+    id: "18",
     name: "Amara Events",
     location: "Lagos",
     price: "₦150,000+",
@@ -15,7 +15,7 @@ const coordinators = [
     tag: "Top Rated",
   },
   {
-    id: "joy",
+    id: "17",
     name: "Joy Weddings",
     location: "Abuja",
     price: "₦120,000+",
@@ -23,7 +23,7 @@ const coordinators = [
     tag: "Trusted",
   },
   {
-    id: "eve",
+    id: "19",
     name: "Eve & Co",
     location: "Port Harcourt",
     price: "₦180,000+",
@@ -86,7 +86,7 @@ export default function CoordinatorsGrid() {
               <p className="text-base font-medium text-rose-600 dark:text-rose-400 mt-1">
                 {c.price}
               </p>
-              <Link href={`/coordinators/${c.id}`}>
+              <Link href={`/coordinator/${c.id}`}>
                 <button className="mt-4 flex items-center gap-2 text-sm text-white bg-rose-600 px-4 py-2 rounded-full hover:bg-rose-700 transition">
                   View Profile <ArrowRight className="w-4 h-4" />
                 </button>

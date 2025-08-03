@@ -40,7 +40,7 @@ const Pagination = ({
       <button
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="px-3 py-1 bg-gray-300 dark:text-black rounded disabled:opacity-50"
+        className="px-3 py-1 bg-gray-300 hover:bg-gray-400 dark:text-black rounded disabled:opacity-50"
       >
         Prev
       </button>
@@ -50,7 +50,7 @@ const Pagination = ({
       <button
         onClick={() => handlePageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="px-3 py-1 bg-gray-300 dark:text-black rounded disabled:opacity-50"
+        className="px-3 py-1 bg-gray-300 dark:text-black hover:bg-gray-400 rounded disabled:opacity-50"
       >
         Next
       </button>
