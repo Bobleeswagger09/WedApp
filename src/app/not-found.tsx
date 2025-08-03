@@ -42,8 +42,8 @@ export default function Error() {
           custom={3}
           className="text-lg sm:text-xl text-gray-700 dark:text-gray-300 max-w-xl mx-auto mb-6"
         >
-          Oops! We couldn’t find the page you’re looking for. Maybe it eloped
-          without telling us.
+          Oops! We couldn&apos;t find the page you’re looking for. Maybe it
+          eloped without telling us.
         </motion.p>
 
         <Link href="/">

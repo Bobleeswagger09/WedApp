@@ -60,7 +60,7 @@ export default function CoordinatorsGrid() {
             >
               <Image
                 src={c.image}
-                width={500}
+                width={900}
                 height={200}
                 alt={c.name}
                 className="w-full h-52 sm:h-64 md:h-72 object-cover"

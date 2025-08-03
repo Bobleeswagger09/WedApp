@@ -6,8 +6,9 @@ import Navbar from "./component/Navbar";
 import Footer from "./component/Footer";
 import { Suspense } from "react";
 import Loading from "./loading";
+import { Lora } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+const lora = Lora({ subsets: ["latin"], weight: ["400", "700"] });
 
 export const metadata: Metadata = {
   title: "Wedly",
@@ -22,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={lora.className}>
         <Suspense fallback={<Loading />}>
           <Providers>
             <Navbar />
