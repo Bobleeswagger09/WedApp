@@ -12,6 +12,8 @@ const lora = Lora({ subsets: ["latin"], weight: ["400", "700"] });
 
 export const metadata: Metadata = {
   title: "Wedly",
+  description: "Find and book your perfect wedding coordinator",
+
   icons: {
     icon: "/favicon.png",
   },
